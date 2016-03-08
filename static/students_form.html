@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Сервіс Обліку Студентів</title>
+    <meta name="description" value="Система Обліку Студентів Навчального Закладу"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Include Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <!-- <style type="text/css">.col-xs-12, .col-xs-4, .col-xs-8 {border:1px solid red;}</style> -->
+
+</head>
+<body>
+
+    <!-- Start Container -->
+    <div class="container">
+
+        <!-- Start Header -->
+            <div class="row" id="header">
+            <!-- Logo -->
+                <div class="col-xs-8">
+                    <h1>Форма редагування студента</h1>
+                </div>
+            </div>
+        <!-- End Header -->
+
+        <!-- Start Main Page Content -->
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">Ім'я*</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Ім'я">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">По-Батькові</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="По-Батькові">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Прізвище*</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Прізвище">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">№ Білету*</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" placeholder="№ Білету">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Дата Народження</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" placeholder="мм/дд/рррр">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Фото</label>
+                    <div class="col-sm-4">
+                        <span class="btn btn-default btn-file">
+                            Browse <input type="file">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Група*</label>
+                    <div class="col-sm-4">
+                        <select class="form-control">
+                            <option>Механіка</option>
+                            <option>Статистика</option>
+                            <option>Математика</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Додаткові нотатки:</label>
+                    <div class="col-sm-4">
+                        <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-primary">Зберегти</button>
+                        <button type="button" class="btn btn-default">Скасувати</button>
+                    </div>
+                </div>
+            </form>
+        <!-- End Main Page Content -->
+
+        <!-- Start Footer -->
+            <div class="row" id="footer">
+                <div class="col-xs-12">
+                    &copy; 2016 Сервіс Обліку Студентів
+                </div>
+            </div>
+        <!-- End Footer -->
+    </div>
+    <!-- End Container -->
+
+
+    <!-- Javascripts Section -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

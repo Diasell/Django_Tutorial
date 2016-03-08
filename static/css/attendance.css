@@ -6,6 +6,15 @@ th {
 	text-align: center;
 }
 
+
+td {
+	text-align: center;
+	vertical-align: -10px;
+}
+
+label {
+	margin-left: 10px;
+}
 .alert {
 /* Ми додали відстань лише зверху елемента: -top */
 margin-top: 10px;
@@ -37,4 +46,9 @@ color: #555555;
 
 #month-button {
 float:left;
+}
+
+.test {
+	padding-top: 20px;
+
 }
