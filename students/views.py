@@ -16,7 +16,7 @@ def students_list(request):
     {'id': 2,
     'first_name': u'Рома',
     'last_name': u'Нікітюк',
-    'ticket': 2123,
+    'ticket': 666,
     'image': 'img/IMG_1937.JPG'},
 
     {'id': 3,
