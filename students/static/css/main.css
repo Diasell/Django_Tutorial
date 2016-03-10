@@ -5,6 +5,9 @@ font-weight: bold;
 th {
 	text-align: center;
 }
+td {
+	text-align: center;
+}
 
 .alert {
 /* Ми додали відстань лише зверху елемента: -top */
