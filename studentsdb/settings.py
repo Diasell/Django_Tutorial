@@ -53,6 +53,7 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'studentsdb.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -64,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'studentsdb.context_processors.students_proc', # my own context processor
             ],
         },
     },
