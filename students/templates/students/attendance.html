@@ -2,7 +2,11 @@
 
 {% load static from staticfiles %}
 
-{% block meta_title %Відвідування{% endblock meta_title %}
+{% block meta_title %}Відвідування{% endblock meta_title %}
+
+{% block journal_css %}
+    <link rel="stylesheet" href="{{PORTAL_URL}}{% static "css/attendance.css" %}">
+{% endblock journal_css %}
 
 {% block title %}Журнал відвідування{% endblock title %}
 
@@ -56,14 +60,13 @@
                 <th>Ср<br>28</th>
                 <th>Чт<br>29</th>
                 <th>Пт<br>30</th>
-                <th>Сб<br>31</th>
             </tr>
         </thead>
         <tbody>
-            {% for student in 'students' %}
+            {% for student in students %}
             <tr>
                 <td>{{forloop.counter}}</td>
-                <td><a title="Редагувати" href="#">{{student.last_name + " " + student.first_name}}</a></td>
+                <td><a title="Редагувати" href="#">{{student.last_name}}</a></td>
                 <td><div class="checkbox">
                         <label><input type="checkbox" value=""></label>
                     </div>
@@ -195,8 +198,8 @@
         <!-- Start Footer -->
             <div class="row" id="footer">
                 <div class="col-xs-12">
-                    &copy; 2014 Сервіс Обліку Студентів
+                    &copy; 2016 Сервіс Обліку Студентів
                 </div>
             </div>
         <!-- End Footer -->
-{% block footer %}
+{% endblock footer %}

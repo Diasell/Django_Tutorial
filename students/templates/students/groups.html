@@ -6,6 +6,14 @@
 
 {% block title %}Групи{% endblock title %}
 
+{% block group_menu %}
+    <select>
+        <option value="">Усі Студенти</option>
+        <option value="">Механіка, Гуцалюк Тарас (No 235)</option>
+        <option value="">Статистика, Арфуа Райд (No 123)</option>
+    </select>
+{% endblock group_menu %}
+
 {% block content %}
     <a class="btn btn-primary" href="{% url 'groups_add' %}">Додати групу</a>
 
@@ -59,3 +67,11 @@
 
 
 {% endblock content %}
+
+{% block footer %}
+    <div class="row" id="footer">
+                <div class="col-xs-12">
+                    &copy; 2016 Сервіс Обліку Студентів
+                </div>
+    </div>
+{% endblock footer %}
