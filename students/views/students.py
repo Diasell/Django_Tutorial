@@ -2,41 +2,19 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from ..models import Student
 
 # Views for Students
 def students_list(request):
-    students = (
-    {'id': 1,
-    'first_name': u'Тарас',
-    'last_name': u'Гуцалюк',
-    'ticket': 235,
-    'image': 'img/IMG_1936.JPG'},
+    students = Student.objects.all()
+    # try to order students list
+    order_by = request.GET.get('order_by', '')
+    if order_by in ('last_name', 'first_name', 'ticket'):
+        students = students.order_by(order_by)
+        if request.GET.get('reverse', '') == '1':
+            students = students.reverse()
 
-    {'id': 2,
-    'first_name': u'Рома',
-    'last_name': u'Нікітюк',
-    'ticket': 666,
-    'image': 'img/roma.jpg'},
-
-    {'id': 3,
-    'first_name': u'Макс',
-    'last_name': u'Кушнір',
-    'ticket': 212,
-    'image': 'img/maks.jpg'},
-
-    {'id': 4,
-    'first_name': u'Райд',
-    'last_name': u'Арфуа',
-    'ticket': 123,
-    'image': 'img/raid.jpg'},
-
-    {'id': 5,
-    'first_name': u'Настя',
-    'last_name': u'Мошенська',
-    'ticket': 562,
-    'image': 'img/nastya.jpg'},
-    )
-    return render(request, 'students/students_list.html', {'students' : students})
+    return render(request, 'students/students_list.html',{'students': students})
 
 
 def students_add(request):
