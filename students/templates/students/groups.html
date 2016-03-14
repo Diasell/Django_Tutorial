@@ -43,8 +43,8 @@
                 {% for group in groups %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td><a title="Редагувати" href="#">{{group.title}}</a></td>
-                    <td><a title="Редагувати" href="#">{{group.leader}}</a></td>
+                    <td><a title="Редагувати" href="{% url 'groups_edit' group.id %}">{{group.title}}</a></td>
+                    <td><a title="Редагувати" href="{% url 'groups_edit' group.id %}">{{group.leader}}</a></td>
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Дія
@@ -55,10 +55,10 @@
                                     <a role="menuitem" tabindex="-1" href="#">Відвідування</a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">Редагувати</a>
+                                    <a role="menuitem" tabindex="-1" href="{% url 'groups_edit' group.id %}">Редагувати</a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">Видалити</a>
+                                    <a role="menuitem" tabindex="-1" href="{% url 'groups_delete' group.id %}">Видалити</a>
                                 </li>
                             </ul>
                         </div>
