@@ -22,7 +22,7 @@ def groups_list(request):
             groups = groups.reverse()
 
     # paginate students
-    paginator = Paginator(groups, 3)
+    paginator = Paginator(groups,3)
     page = request.GET.get('page')
     try:
         groups = paginator.page(page)
