@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from ..models import Exams
+from ..models import Exams, Group
 
 # Views for Students
 def exams_list(request):
@@ -34,7 +34,8 @@ def exams_list(request):
 
 
 
-    return render(request, 'students/exams.html',{'exams': exams})
+    return render(request, 'students/exams.html',{'exams': exams,
+                                                  'groups': Group.objects.all().order_by('title')})
 
 
 def students_add(request):

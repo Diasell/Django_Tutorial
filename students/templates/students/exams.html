@@ -7,10 +7,11 @@
 {% block title %}Список іспитів{% endblock title %}
 
 {% block group_menu %}
-    <select>
-        <option value="">Усі Студенти</option>
-        <option value="">Механіка, Гуцалюк Тарас (No 235)</option>
-        <option value="">Статистика, Арфуа Райд (No 123)</option>
+    <select name="Student_group" id="student_group">
+        <option value="">Виберіть Групу</option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{group.title}}</option>
+        {% endfor %}
     </select>
 {% endblock group_menu %}
 
