@@ -7,10 +7,11 @@
 {% block title %}База студентів{% endblock title %}
 
 {% block group_menu %}
-    <select>
-        <option value="">Усі Студенти</option>
-        <option value="">Механіка, Гуцалюк Тарас (No 235)</option>
-        <option value="">Статистика, Арфуа Райд (No 123)</option>
+    <select name="Student_group" id="student_group">
+        <option value="">Виберіть Групу</option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{group.title}}</option>
+        {% endfor %}
     </select>
 {% endblock group_menu %}
 
@@ -52,7 +53,7 @@
         <tbody>
             {% for student in students %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
+                    <td>{{ students.start_index|add:forloop.counter0 }}</td>
                     {% if student.photo %}
                     <td><img height="30" width="30" class="img-circle" src="{{ student.photo.url }}"></td>
                     {% else %}

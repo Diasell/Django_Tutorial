@@ -23,6 +23,7 @@ def groups_list(request):
 
     # paginate groups
     paginator = Paginator(groups, 3)
+
     page = request.GET.get('page')
     try:
         groups = paginator.page(page)

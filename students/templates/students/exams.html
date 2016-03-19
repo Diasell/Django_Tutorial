@@ -1,0 +1,99 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Іспити{% endblock meta_title %}
+
+{% block title %}Список іспитів{% endblock title %}
+
+{% block group_menu %}
+    <select name="Student_group" id="student_group">
+        <option value="">Виберіть Групу</option>
+        {% for group in groups %}
+        <option value="{{ group.id }}">{{group.title}}</option>
+        {% endfor %}
+    </select>
+{% endblock group_menu %}
+
+{% block content %}
+
+    <!-- Start Students Listing -->
+    <table class="table table-hover table-striped">
+        {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>
+                    <a href="{% url "exams" %}?order_by=exam_group{% if reverse != '1' %}&amp;reverse=1{% endif %}">Група
+                        {% if reverse != '1' and order_by = '' %}&uarr;
+                        {% elif reverse != '1' and order_by = 'exam_group'%}&uarr;
+                        {% elif reverse == '1' and order_by = 'exam_group' %}&darr;{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="{% url "exams" %}?order_by=exam_title{% if order_by == 'exam_title' and reverse != '1' %}&amp;reverse=1{% endif %}">Дисципліна
+                        {% if order_by == 'exam_title' and reverse != '1' %}&uarr;
+                        {% elif order_by == 'exam_title' and reverse == '1' %}&darr;{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="{% url "exams" %}?order_by=exam_executor{% if order_by == 'exam_executor' and reverse != '1' %}&amp;reverse=1{% endif %}">Викладач
+                        {% if order_by == 'exam_executor' and reverse != '1' %}&uarr;
+                        {% elif order_by == 'exam_executor' and reverse == '1' %}&darr;{% endif %}
+                    </a>
+                </th>
+                <th>Аудиторія</th>
+                <th>
+                    <a href="{% url "exams" %}?order_by=date_time{% if order_by == 'date_time' and reverse != '1' %}&amp;reverse=1{% endif %}">Час проведення
+                        {% if order_by == 'date_time' and reverse != '1' %}&uarr;
+                        {% elif order_by == 'date_time' and reverse == '1' %}&darr;{% endif %}
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        {% endwith %}
+        <tbody>
+            {% for exam in exams %}
+                <tr>
+                    <td>{{ exams.start_index|add:forloop.counter0 }}</td>
+                    <td>{{exam.exam_group}}</td>
+                    <td>{{exam.exam_title}}</td>
+                    <td>{{exam.exam_executor}}</td>
+                    <td>{{exam.room}}</td>
+                    <td>{{exam.date_time}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- End Students Listing -->
+
+    <!-- Pagination -->
+    {% if exams.has_other_pages %}
+        {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+        <nav>
+            <ul class="pagination">
+                <li><a href="{% url "exams" %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{reverse}}">&laquo;</a><li>
+                
+                {% for p in exams.paginator.page_range %}
+                <li {% if exams.number == p %}class="active"{% endif %}>
+                    <a href="{% url "exams" %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{reverse}}">{{p}}</a>
+                </li>
+                {% endfor %}
+                <li>
+                    <a href="{% url "exams" %}?page={{groups.paginator.num_pages}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+        {% endwith %}
+    {% endif %}
+
+    <!-- End Main Page Content -->
+{% endblock content %}
+
+{% block footer %}
+    <div class="row" id="footer">
+                <div class="col-xs-12">
+                    &copy; 2016 Сервіс Обліку Студентів
+                </div>
+    </div>
+{% endblock footer %}
