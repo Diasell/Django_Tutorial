@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..models import Student, Group
-from ..validation import valid_image_mimetype, valid_image_size
 
 # Views for Students
 def students_list(request):
@@ -98,15 +97,12 @@ def students_add(request):
 
             photo = request.FILES.get('photo')
             if photo:
-                correct_photo = valid_image_mimetype(photo) # checking if its a photo
-                if correct_photo:
-                    photo_size_val = valid_image_size(photo)
-                    if photo_size_val:
-                        data['photo'] = photo
-                    else:
-                        errors['photo'] = u"Фото повинно бути менше 2мб"
+                if photo.size>(2048*1024):
+                    errors['photo'] = u"Розмір фотографії не повинен перевищувати 2 МБ"
+                elif not('image' in photo.content_type):
+                    errors['photo'] = u"Тип вибраного вами файлу не є зображенням"
                 else:
-                    errors['photo'] = u"Формат не підтримується"
+                    data['photo'] = photo
 
 
             # save student
