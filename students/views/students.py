@@ -114,39 +114,17 @@ def students_add(request):
                 student = Student(**data)
                 student.save()
                 # redirect to students list page
-                return HttpResponseRedirect(reverse('home'))
+                return HttpResponseRedirect(u'%s?status_message=Cтудент %s %s успішно доданий!' % (reverse('home'),
+                                                                                   student.last_name,
+                                                                                   student.first_name))
             else:
                 # render form with errors and previous user input
                 return render(request, 'students/students_add.html',{'groups': Group.objects.all().order_by('title'),
                                                                      'errors': errors})
 
-
-
-
-            if not errors:
-                # Create student object
-                new_student = Student(
-                    first_name = request.POST['first_name'],
-                    last_name = request.POST['last_name'],
-                    middle_name = request.POST['middle_name'],
-                    birthday = request.POST['birthday'],
-                    ticket = request.POST['ticket'],
-                    student_group = Group.objects.get(pk=request.POST['student_group']),
-                    photo = request.FILES['photo'],
-                )
-                #Saving student to data base
-                new_student.save()
-
-                #redirect user to students list page
-                return HttpResponseRedirect(reverse('home'))
-
-            else:
-                # render form with errors and previous user input
-                return render(request, 'students/students_add.html', {'errors':errors})
-
         elif request.POST.get('cancel_button') is not None:
             # Redirect user to home page on cancel button
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(u'%s?status_message=Додавання студента скасовано!' % reverse('home'))
 
     else:
         # initial form render
