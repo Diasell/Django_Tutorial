@@ -46,6 +46,8 @@ urlpatterns = [
     # Journal urls:
     url(r'^journal/$', 'students.views.journal.journal_test', name='journal'),
 
+    # Contact-admin
+    url(r'^contact-admin/$', 'students.views.contact_admin.contact_admin', name='contact_admin'),
 
     # admin part
     url(r'^admin/', include(admin.site.urls)),
