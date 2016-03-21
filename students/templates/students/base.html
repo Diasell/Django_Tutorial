@@ -40,7 +40,8 @@
                     <ul class="nav nav-tabs" role="tablist">
 
                         {% url "home" as home %}
-                        <li role="presentation" {% if request.path == home %}class="active"{% endif %}><a href="{% url 'home' %}">Студенти</a></li>
+                        {% url "students_add" as students_add %}
+                        <li role="presentation" {% if request.path == home %}class="active"{% endif %}{% if request.path == students_add %}class="active"{% endif %}><a href="{% url 'home' %}">Студенти</a></li>
 
                         {% url "journal" as journal %}
                         <li role="presentation" {% ifequal request.path journal %}class="active"{% endifequal %}><a href="{% url 'journal' %}">Відвідування</a></li>
