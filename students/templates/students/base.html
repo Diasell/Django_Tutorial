@@ -60,10 +60,12 @@
             <div class="row" id="content-columns">
                 <div class="col-xs-12" id="content-column">
                     
-                    {% block x_y %}
-                    {% if request.GET.status_message %}
-                    <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}</div>
-                    {% endif %}
+                    {% block statusmessage %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{message.tags}}">{{message}}</div>
+                            {% endfor %}
+                        {% endif %}
                     {% endblock %}
 
 

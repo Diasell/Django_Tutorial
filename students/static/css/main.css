@@ -9,6 +9,11 @@ td {
 	text-align: center;
 }
 
+textarea,
+select,
+input {
+	max-width: 300px;
+}
 .alert {
 /* Ми додали відстань лише зверху елемента: -top */
 margin-top: 10px;
