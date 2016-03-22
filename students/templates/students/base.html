@@ -28,7 +28,6 @@
                 </div>
             <!-- Groups Selector -->
                 <div class="col-xs-4" id="group-selector">
-                    <strong>Група:</strong>
                     {% block group_menu %}{% endblock group_menu %}
                 </div>
             </div>
@@ -40,7 +39,8 @@
                     <ul class="nav nav-tabs" role="tablist">
 
                         {% url "home" as home %}
-                        <li role="presentation" {% if request.path == home %}class="active"{% endif %}><a href="{% url 'home' %}">Студенти</a></li>
+                        {% url "students_add" as students_add %}
+                        <li role="presentation" {% if request.path == home %}class="active"{% endif %}{% if request.path == students_add %}class="active"{% endif %}><a href="{% url 'home' %}">Студенти</a></li>
 
                         {% url "journal" as journal %}
                         <li role="presentation" {% ifequal request.path journal %}class="active"{% endifequal %}><a href="{% url 'journal' %}">Відвідування</a></li>
@@ -51,6 +51,9 @@
                          {% url "exams" as exam %}
                         <li role="presentation" {% ifequal request.path exam %}class="active"{% endifequal %}><a href="{% url 'exams' %}">Іспити</a></li>
 
+                         {% url "contact_admin" as contact_admin %}
+                        <li role="presentation" {% if request.path == contact_admin %}class="active"{% endif %}><a href="{% url 'contact_admin' %}">Контакт</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -59,10 +62,14 @@
         <!-- Start Main Page Content -->
             <div class="row" id="content-columns">
                 <div class="col-xs-12" id="content-column">
-                    {% comment "Not used alert so far" %}
-                    <!-- Status Message -->
-                    <div class="alert alert-warning">Зміни скасовано.</div>
-                    {% endcomment %}
+                    
+                    {% block statusmessage %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{message.tags}}">{{message}}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endblock %}
 
 
                     <h2>{% block title %}{% endblock title %}</h2>
