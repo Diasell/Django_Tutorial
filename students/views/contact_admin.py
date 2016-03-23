@@ -4,7 +4,7 @@ from django import forms
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-
+from django.contrib import messages
 
 from studentsdb.settings import ADMIN_EMAIL
 
@@ -44,12 +44,16 @@ def contact_admin(request):
             except Exception:
                 message = u'Під час відправки листа виникла непередбачувана помилка.' \
                           u' Спробуйте скористатись даною формою пізніше.'
+                messages.warning(request,message)
             else:
                 message = u'Повідомлення успішно надіслане!'
+                messages.success(request,message)
 
             # redirect to same contact page with  message
-            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('contact_admin'),
-                                                                   message))
+            return HttpResponseRedirect(reverse('contact_admin'))
+        else:
+            message = u'Будь ласка заповніть поля форми'
+            messages.warning(request,message)
 
         # if there was not POST render blank form
     else:
