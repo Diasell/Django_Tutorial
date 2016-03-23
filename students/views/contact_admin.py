@@ -51,7 +51,7 @@ def contact_admin(request):
 
             # redirect to same contact page with  message
             return HttpResponseRedirect(reverse('contact_admin'))
-        else:
+        elif form.errors:
             message = u'Будь ласка заповніть поля форми'
             messages.warning(request,message)
 
