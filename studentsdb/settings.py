@@ -139,8 +139,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 ADMIN_EMAIL = 'gutsalyuk.taras@gmail.com'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'email.host'
-EMAIL_HOST_PASSWORD = '************'
+EMAIL_HOST_USER = 'gutsalyuk.taras@gmail.com'
+EMAIL_HOST_PASSWORD = '1qaz0okm_SendGrid1'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
 
