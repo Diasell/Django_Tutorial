@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..models import Student, Group
 from django.contrib import messages
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
@@ -198,3 +198,11 @@ class StudentUpdateView(UpdateView):
             success_msg = u'Cтудента успішно збережено!'
             messages.success(request,success_msg)
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
+
+
+class StudentDeleteView(DeleteView):
+    model = Student
+    template_name = 'students/student_confirm_delete.html'
+
+    def get_success_url(self):
+        return u'%s?Status_message=Студента успішно видалено!' % reverse('home')
