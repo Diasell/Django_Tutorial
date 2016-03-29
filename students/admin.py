@@ -12,8 +12,23 @@ class StudentAdmin(admin.ModelAdmin):
     list_per_page = 10
     search_fields = ['last_name', 'first_name', 'middle_name', 'ticket', 'notes']
 
+    actions = ['duplicate_sel_student']
+
     def get_view_on_site(self, obj):
         return reverse('students_edit', kwargs={'pk':obj.id})
+
+    def duplicate_sel_student(self, request, queryset):
+        for object in queryset:
+            object.id = None
+            object.save()
+
+        rows_updated = queryset.count()
+        if rows_updated == 1:
+            user_message = "1 student was successfully dupicated"
+        else:
+            user_message = "%s students were successfully dupicated" % rows_updated
+        self.message_user(request, user_message)
+    duplicate_sel_student.short_description = "Duplicate"
 
 
 class GroupAdmin(admin.ModelAdmin):
