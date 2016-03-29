@@ -1,8 +1,25 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.db import models
-from django.forms import TextInput, Textarea
+from django.forms import TextInput, Textarea, ModelForm, ValidationError
 from django.core.urlresolvers import reverse
 from .models import Student, Group, Professor, LectorLevel, LectorPositions, Exams
+
+
+class StudentFormAdmin(ModelForm):
+
+    def clean_student_group(self):
+        """
+        Checks if student is not a leader in any other group.
+        If yes, we need to ensure that it is the same group as selected
+        """
+        # get groups where current student is a leader:
+        groups = Group.objects.filter(leader = self.instance)
+
+        if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
+            raise ValidationError(u'Студент є старостою іншої групи.', code='invalid')
+        else:
+            return self.cleaned_data['student_group']
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['last_name', 'first_name', 'ticket', 'student_group']
@@ -11,6 +28,8 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ['student_group']
     list_per_page = 10
     search_fields = ['last_name', 'first_name', 'middle_name', 'ticket', 'notes']
+
+    form = StudentFormAdmin
 
     actions = ['duplicate_sel_student']
 
