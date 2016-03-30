@@ -1,9 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from ..models import Exams, Group
+from django.core.urlresolvers import reverse
+from ..models import Exams, Group, Student
+from django.forms import ModelForm, ValidationError
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Button, Layout, Fieldset
+from crispy_forms.bootstrap import FormActions
+
+from django.contrib import messages
+from django.views.generic import UpdateView
+
 
 # Views for Students
 def exams_list(request):
@@ -48,3 +58,63 @@ def students_edit(request, sid):
 
 def students_delete(request, sid):
     return HttpResponse('<h1>Delete Student %s</h1>' % sid)
+
+
+class ExamsUpdateForm(ModelForm):
+
+    class Meta:
+        model = Exams
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(ExamsUpdateForm, self).__init__(*args,**kwargs)
+
+        self.helper = FormHelper(self)
+
+        # set form tag attributes
+        self.helper.form_action = reverse('exams_edit', kwargs={'pk':kwargs['instance'].id})
+        self.helper.form_method = 'POST'
+        self.helper.form_class = 'form-horizontal'
+
+        #set form field properties
+        self.helper.help_text_inline = True
+        self.helper.html5_required = True
+        self.helper.label_class = 'col-sm-2 control-label'
+        self.helper.field_class = 'col-sm-10'
+
+        #add buttons
+        """self.helper = FormActions(
+            Submit('add_button', u'Зберегти', css_class="btn btn-primary"),
+            Submit('cancel_button', u'Скасувати', css_class="btn btn-link"))"""
+        self.helper.layout = Layout(
+            Fieldset(
+                'exams field list',
+                'exam_title',
+                'exam_executor',
+                'exam_group',
+                'room',
+                'date_time'
+            ),
+            FormActions(
+                Submit('add_button', u'Зберегти', css_class="btn btn-primary"),
+                Submit('cancel_button', u'Скасувати', css_class="btn btn-link")
+            )
+        )
+
+
+
+class ExamsUpdateView(UpdateView):
+    model = Exams
+    template_name = 'students/exams_edit.html'
+    form_class = ExamsUpdateForm
+
+    def get_success_url(self):
+        return reverse('exams')
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            cancel_message = u'Редагування іспиту відмінено!'
+            messages.info(request, cancel_message)
+            return HttpResponseRedirect(u'%s?status_message=Редагування студента відмінено!' % reverse('exams'))
+        else:
+            return super(ExamsUpdateView, self).post(request, *args, **kwargs)

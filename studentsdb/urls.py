@@ -18,6 +18,7 @@ from django.contrib import admin
 from .settings import MEDIA_ROOT, DEBUG
 from students.views.students import StudentUpdateView, StudentDeleteView
 from students.views.groups import DeleteGroupView, GroupUpdateView
+from students.views.exams import ExamsUpdateView
 
 
 urlpatterns = [
@@ -43,6 +44,7 @@ urlpatterns = [
 
     # Exams urls:
     url(r'^exams/$', 'students.views.exams.exams_list', name='exams'),
+    url(r'^exams/(?P<pk>\d+)/edit/$', ExamsUpdateView.as_view(), name='exams_edit'),
 
 
     # Journal urls:
