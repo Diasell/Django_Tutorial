@@ -9,7 +9,7 @@ from ..models import Student, Group
 from django.contrib import messages
 from django.views.generic import UpdateView, DeleteView
 
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
@@ -180,6 +180,20 @@ class StudentUpdateForm(ModelForm):
         )
 
 
+    def clean_student_group(self):
+        """
+        Checks if student is not a leader in any other group.
+        If yes, we need to ensure that it is the same group as selected
+        """
+        # get groups where current student is a leader:
+        groups = Group.objects.filter(leader = self.instance)
+
+        if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
+            raise ValidationError(u"Студент є старостою іншої групи.", code='invalid')
+        else:
+            return self.cleaned_data['student_group']
+
+
 class StudentUpdateView(UpdateView):
     model = Student
     template_name = 'students/students_edit.html'
@@ -195,8 +209,6 @@ class StudentUpdateView(UpdateView):
             messages.info(request, cancel_message)
             return HttpResponseRedirect(u'%s?status_message=Редагування студента відмінено!' % reverse('home'))
         else:
-            success_msg = u'Cтудента успішно збережено!'
-            messages.success(request,success_msg)
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 
 

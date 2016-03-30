@@ -4,11 +4,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import  reverse
-from ..models import Group
+from ..models import Group, Student
 from django.views.generic import UpdateView, DeleteView
 from django.contrib import messages
 
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
@@ -93,6 +93,19 @@ class GroupUpdateForm(ModelForm):
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link")
         )
 
+    def clean_leader(self):
+        """
+        Check if selected student belongs to the group. If not then he cant be a leader
+        of this group
+        """
+        # gets all students that belongs to selected group
+        group_students = Student.objects.filter(student_group = self.instance)
+
+        if len(group_students)>0 and self.cleaned_data['leader'] not in group_students:
+            raise ValidationError(u"Студент не належить до даної групи", code='invalid')
+        else:
+            return self.cleaned_data['leader']
+
 
 class GroupUpdateView(UpdateView):
     model = Group
@@ -109,6 +122,4 @@ class GroupUpdateView(UpdateView):
             messages.info(request, cancel_message)
             return HttpResponseRedirect(u'%s?status_message=Редагування відмінено!' % reverse('groups'))
         else:
-            success_msg = u'Зміни успішно збережено!'
-            messages.success(request,success_msg)
-            return super(GroupUpdateForm, self).post(request, *args, **kwargs)
+            return super(GroupUpdateView, self).post(request, *args, **kwargs)
