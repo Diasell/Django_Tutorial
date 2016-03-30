@@ -17,14 +17,29 @@ class StudentFormAdmin(ModelForm):
         groups = Group.objects.filter(leader = self.instance)
 
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-            raise ValidationError(u'Студент є старостою іншої групи.', code='invalid')
+            raise ValidationError(u'Ð¡Ñ‚ÑƒÐ´ÐµÐ½Ñ‚ Ñ” Ñ�Ñ‚Ð°Ñ€Ð¾Ñ�Ñ‚Ð¾ÑŽ Ñ–Ð½ÑˆÐ¾Ñ— Ð³Ñ€ÑƒÐ¿Ð¸.', code='invalid')
         else:
             return self.cleaned_data['student_group']
+
+
+class GroupFormAdmin(ModelForm):
+
+    def clean_leader(self):
+        """
+        Check if selected student belongs to the group. If not then he cant be a leader
+        of this group
+        """
+        # gets all students that belongs to selected group
+        group_students = Student.objects.filter(student_group = self.instance)
+
+        if len(group_students)>0 and self.cleaned_data['leader'] not in group_students:
+            raise ValidationError(u"Студент не належить до даної групи", code='invalid')
+        else:
+            return self.cleaned_data['leader']
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['last_name', 'first_name', 'ticket', 'student_group']
     list_display_links = ['last_name', 'first_name']
-    list_editable = ['student_group']
     list_filter = ['student_group']
     list_per_page = 10
     search_fields = ['last_name', 'first_name', 'middle_name', 'ticket', 'notes']
@@ -56,6 +71,8 @@ class GroupAdmin(admin.ModelAdmin):
     list_editable = ['leader']
     list_per_page = 5
     search_fields = ['title']
+
+    form = GroupFormAdmin
 
     def get_view_on_site(self, obj=None):
         return reverse('groups_edit', kwargs={'pk':obj.id})
