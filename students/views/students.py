@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-
-from django.shortcuts import render
 from datetime import datetime
+from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from ..models import Student, Group
+
+from ..models.students import Student
+from ..models.groups import Group
+
 from django.contrib import messages
 from django.views.generic import UpdateView, DeleteView
 

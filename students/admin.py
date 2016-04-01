@@ -3,8 +3,13 @@ from django.contrib import admin
 from django.db import models
 from django.forms import TextInput, Textarea, ModelForm, ValidationError
 from django.core.urlresolvers import reverse
-from .models import Student, Group, Professor, LectorLevel, LectorPositions, Exams
 
+from .models.students import Student
+from .models.groups import Group
+from .models.professor import Professor
+from .models.lectorlevel import LectorLevel
+from .models.lectorpositions import LectorPositions
+from .models.exams import Exams
 
 class StudentFormAdmin(ModelForm):
 

@@ -4,7 +4,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
-from ..models import Exams, Group, Student
+
+from ..models.exams import Exams
+from ..models.groups import Group
+from ..models.students import Student
 from django.forms import ModelForm, ValidationError
 
 from crispy_forms.helper import FormHelper
@@ -47,17 +50,6 @@ def exams_list(request):
     return render(request, 'students/exams.html',{'exams': exams,
                                                   'groups': Group.objects.all().order_by('title')})
 
-
-def students_add(request):
-    return HttpResponse('<h1>Student Add Form</h1>')
-
-
-def students_edit(request, sid):
-    return HttpResponse('<h1>Edit Student %s</h1>' % sid)
-
-
-def students_delete(request, sid):
-    return HttpResponse('<h1>Delete Student %s</h1>' % sid)
 
 
 class ExamsUpdateForm(ModelForm):
