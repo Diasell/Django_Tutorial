@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from 
+from .students import Student
 
 
 class MonthJournal(models.Model):
     """ Student monthly test journal"""
     class Meta:
-        verbose_name = u""
-        verbose_name_plural = u""
+        verbose_name = u"Журнал Відвідувань"
+        verbose_name_plural = u"Журнали Відвідувань"
 
     student = models.ForeignKey('Student',
-            verbose_name=u"",
+            verbose_name=u"Студент",
             blank=False,
             unique_for_month='date'
     )
@@ -18,7 +18,7 @@ class MonthJournal(models.Model):
     # we need only year and month so always set day to first of the month
 
     date = models.DateField(
-        verbose_name=u"",
+        verbose_name=u"Дата",
         blank=False
     )
 
@@ -58,4 +58,4 @@ class MonthJournal(models.Model):
 
 
     def __unicode__(self):
-        return u"%s: %d, %d" % (self.student.last_name,
+        return u"%s: %d, %d" % (self.student.last_name, self.date.month, self.date.year)

@@ -4,12 +4,9 @@ from django.db import models
 from django.forms import TextInput, Textarea, ModelForm, ValidationError
 from django.core.urlresolvers import reverse
 
-from .models.students import Student
-from .models.groups import Group
-from .models.professor import Professor
-from .models.lectorlevel import LectorLevel
-from .models.lectorpositions import LectorPositions
-from .models.exams import Exams
+from .models import Student, Group, Professor, LectorLevel, LectorPositions, MonthJournal, Exams
+
+
 
 class StudentFormAdmin(ModelForm):
 
@@ -119,3 +116,4 @@ admin.site.register(Professor, ProfessorAdmin)
 admin.site.register(LectorLevel)
 admin.site.register(LectorPositions)
 admin.site.register(Exams, ExamsAdmin)
+admin.site.register(MonthJournal)
