@@ -48,7 +48,7 @@ class StudentsListView(TemplateView):
 
         return context
 
-# Views for Students
+"""# Views for Students
 def students_list(request):
     students = Student.objects.all()
     # ordering students by last_name when 1st time on the page:
@@ -69,7 +69,7 @@ def students_list(request):
 
     print context
 
-    return render(request, 'students/students_list.html', context)
+    return render(request, 'students/students_list.html', context)"""
 
 
 def students_add(request):

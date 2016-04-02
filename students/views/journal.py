@@ -21,8 +21,7 @@ class JournalView(TemplateView):
 
         # check if we need to display some specific month
         if self.request.GET.get('month'):
-            month = datetime.strptime(self.request.GET['month'],
-                                      '%Y-%m-%d').date()
+            month = datetime.strptime(self.request.GET['month'],'%Y-%m-%d').date()
         else:
             # otherwise just displaying current month data
             today = datetime.today()
@@ -92,7 +91,7 @@ class JournalView(TemplateView):
             })
 
         # застосовуємо пагінацію до списку студентів
-        context = paginate(students,10,self.request, context, var_name='students')
+        context = paginate(students,5,self.request, context, var_name='students')
 
         # повертаємо оновлений словник із даними
         return context

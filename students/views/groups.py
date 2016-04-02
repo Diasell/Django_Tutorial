@@ -2,13 +2,15 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import  reverse
 
 from ..models.groups import Group
 from ..models.students import Student
 
+from ..util import paginate
+
 from django.views.generic import UpdateView, DeleteView
+from django.views.generic.base import TemplateView
 from django.contrib import messages
 
 from django.forms import ModelForm, ValidationError
@@ -16,7 +18,33 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 
-# Views for Groups
+
+class GroupListView(TemplateView):
+    template_name = 'students/groups.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super(GroupListView, self).get_context_data(**kwargs)
+        groups = Group.objects.all()
+        # ordering groups by title by default
+
+        if self.request.path == '/groups/':
+            groups = groups.order_by('title')
+
+        # try to order students list
+        order_by = self.request.GET.get('order_by', '')
+        if order_by in ('title', 'leader'):
+            groups = groups.order_by(order_by)
+            if self.request.GET.get('reverse', '') == '1':
+                groups = groups.reverse()
+
+        context['groups'] = groups
+
+        paginate(groups,3,self.request, context, var_name='groups')
+
+        return context
+
+"""# Views for Groups
 def groups_list(request):
     groups = Group.objects.all()
     # ordering groups by title by default
@@ -45,7 +73,7 @@ def groups_list(request):
         # last page of results.
         groups = paginator.page(paginator.num_pages)
 
-    return render(request, 'students/groups.html', {'groups' : groups})
+    return render(request, 'students/groups.html', {'groups' : groups})"""
 
 
 def groups_add(request):

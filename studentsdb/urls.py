@@ -17,7 +17,7 @@ from django.conf.urls import url, patterns, include
 from django.contrib import admin
 from .settings import MEDIA_ROOT, DEBUG
 from students.views.students import StudentUpdateView, StudentDeleteView, StudentsListView
-from students.views.groups import DeleteGroupView, GroupUpdateView
+from students.views.groups import DeleteGroupView, GroupUpdateView, GroupListView
 from students.views.exams import ExamsUpdateView
 from students.views.journal import JournalView
 
@@ -34,7 +34,7 @@ urlpatterns = [
 
 
     # Groups urls
-    url(r'^groups/$', 'students.views.groups.groups_list', name='groups'),
+    url(r'^groups/$', GroupListView.as_view(), name='groups'),
 
     url(r'^groups/add/$', 'students.views.groups.groups_add', name='groups_add'),
 
