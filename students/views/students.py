@@ -3,7 +3,9 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from ..util import paginate
+
+from django.views.generic.base import TemplateView
 
 from ..models.students import Student
 from ..models.groups import Group
@@ -16,6 +18,35 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 
+
+
+
+class StudentsListView(TemplateView):
+    template_name = 'students/students_list.html'
+
+    def get_context_data(self, **kwargs):
+
+        context = super(StudentsListView, self).get_context_data(**kwargs)
+
+        students = Student.objects.all()
+        # ordering students by last_name when 1st time on the page:
+        if self.request.path == '/':
+            students = students.order_by('last_name')
+
+        # try to order students list
+        order_by = self.request.GET.get('order_by', '')
+        if order_by in ('last_name', 'first_name', 'ticket'):
+            students = students.order_by(order_by)
+            if self.request.GET.get('reverse', '') == '1':
+                students = students.reverse()
+
+        context['students'] = students
+        context['groups'] = Group.objects.all().order_by('title')
+
+        # paginate students
+        context = paginate(students, 5, self.request, context, var_name='students')
+
+        return context
 
 # Views for Students
 def students_list(request):
@@ -31,23 +62,14 @@ def students_list(request):
         if request.GET.get('reverse', '') == '1':
             students = students.reverse()
 
+    context['students'] = students
+    context['groups'] = Group.objects.all().order_by('title')
     # paginate students
-    paginator = Paginator(students, 5)
-    page = request.GET.get('page')
-    try:
-        students = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        students = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver
-        # last page of results.
-        students = paginator.page(paginator.num_pages)
+    context = paginate(students, 5, request, context)
 
+    print context
 
-
-    return render(request, 'students/students_list.html',{'students': students,
-                                                          'groups': Group.objects.all().order_by('title')})
+    return render(request, 'students/students_list.html', context)
 
 
 def students_add(request):

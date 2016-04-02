@@ -90,7 +90,10 @@
     <!-- End Students Listing -->
 
     <!-- Pagination -->
-    {% include "students/pagination.html" %}
+    {% with object_list=students %}
+        {% include "students/pagination.html" %}
+    {% endwith %}
+
 
     <!-- End Main Page Content -->
 {% endblock content %}
