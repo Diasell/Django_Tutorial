@@ -14,6 +14,10 @@
 		<a href="{% url "students_add" %}">додайте</a> першого.
 	</div>
 {% else %}
+	<div class="alert alert-info">
+		Зміни в журналі зберігаються автоматично при кожному кліку по чекбоксу
+		<span id="ajax-progress-indicator">Йде збереження...</span>
+	</div>
 	<p id="journal-nav" class="text-center">
 		<a href="?month={{ prev_month }}" title="Попередній Місяць">&larr;</a>
 
