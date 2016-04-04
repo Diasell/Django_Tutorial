@@ -79,7 +79,6 @@ class JournalView(TemplateView):
                                                    'present_day%d' % day,
                                                    False) or False,
                     'date': date(myear, mmonth, day).strftime('%Y-%m-%d'),
-                    'date': date(2016,4,day).strftime('%Y-%m-%d'),
                 })
 
             # prepare metadata from current student
