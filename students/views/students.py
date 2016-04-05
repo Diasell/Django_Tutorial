@@ -17,7 +17,7 @@ from django.forms import ModelForm, ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
-
+from ..util import paginate, get_current_group
 
 
 
@@ -28,7 +28,13 @@ class StudentsListView(TemplateView):
 
         context = super(StudentsListView, self).get_context_data(**kwargs)
 
-        students = Student.objects.all()
+        # check if we need to show only 1 group of students:
+        current_group = get_current_group(self.request)
+        if current_group:
+            students = Student.objects.filter(student_group=current_group)
+        else:
+            # otherwise show all students
+            students = Student.objects.all()
         # ordering students by last_name when 1st time on the page:
         if self.request.path == '/':
             students = students.order_by('last_name')

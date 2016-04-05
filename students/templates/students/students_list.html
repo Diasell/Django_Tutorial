@@ -6,15 +6,6 @@
 
 {% block title %}База студентів{% endblock title %}
 
-{% block group_menu %}
-    <strong >Група:</strong>
-    <select style="max-width:200px" name="Student_group" id="student_group">
-        <option value="">Виберіть Групу</option>
-        {% for group in groups %}
-        <option value="{{ group.id }}">{{group.title}}</option>
-        {% endfor %}
-    </select>
-{% endblock group_menu %}
 
 {% block content %}
     <!-- Add Student Button -->
@@ -72,7 +63,7 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="/journal/{{student.id}}">Відвідування</a>
+                                    <a role="menuitem" tabindex="-1" href="{% url "journal" student.id %}">Відвідування</a>
                                 </li>
                                 <li role="presentation">
                                     <a role="menuitem" tabindex="-1" href="{% url 'students_edit' student.id %}">Редагувати</a>

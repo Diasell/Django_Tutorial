@@ -28,7 +28,15 @@
                 </div>
             <!-- Groups Selector -->
                 <div class="col-xs-4" id="group-selector">
-                    {% block group_menu %}{% endblock group_menu %}
+                    <strong>Група:</strong>
+                    <select>
+                        <option value="">Усі Студенти</option>
+                        {% for group in GROUPS %}
+                            <option value="{{ group.id }}" {% if group.selected %}selected="1"{% endif %}>
+                                {{ group.title }}{% if group.leader %}, {{group.leader}}{% endif %}
+                            </option>
+                        {% endfor%}
+                    </select>
                 </div>
             </div>
         <!-- End Header -->
@@ -88,7 +96,7 @@
 
     <!-- Javascripts Section -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="https://cdn.jsdelivr.net/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="{% static "js/main.js" %}"></script>
     {% block extra_js %}{% endblock extra_js %}

@@ -6,14 +6,6 @@
 
 {% block title %}Групи{% endblock title %}
 
-{% block group_menu %}
-    <select name="Student_group" id="student_group">
-        <option value="">Виберіть Групу</option>
-        {% for group in groups %}
-        <option value="{{ group.id }}">{{group.title}}</option>
-        {% endfor %}
-    </select>
-{% endblock group_menu %}
 
 {% block content %}
     <a class="btn btn-primary" href="{% url 'groups_add' %}">Додати групу</a>

@@ -14,14 +14,6 @@
 
 {% block title %}Додати Студента{% endblock title %}
 
-{% block group_menu %}
-    <select name="Student_group" id="student_group">
-        <option value="">Виберіть Групу</option>
-        {% for group in groups %}
-        <option value="{{ group.id }}">{{group.title}}</option>
-        {% endfor %}
-    </select>
-{% endblock group_menu %}
 
 {% block content %}
     <form action="." method="post" enctype="multipart/form-data" role="form"

@@ -49,7 +49,7 @@ urlpatterns = [
 
 
     # Journal urls:
-    url(r'^journal/$', JournalView.as_view(),  name='journal'),
+    url(r'^journal/(?P<pk>\d+)?/?$', JournalView.as_view(),  name='journal'),
 
     # Contact-admin
     url(r'^contact-admin/$', 'students.views.contact_admin.contact_admin', name='contact_admin'),

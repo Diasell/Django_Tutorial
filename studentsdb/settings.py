@@ -66,7 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'studentsdb.context_processors.students_proc', # my own context processor
+                'studentsdb.context_processors.students_proc',  # my own context processor
+                'students.context_processors.groups_processor',  # my own for group list  drop down list
             ],
         },
     },
