@@ -17,10 +17,18 @@ from crispy_forms.bootstrap import FormActions
 from django.contrib import messages
 from django.views.generic import UpdateView
 
+from ..util import get_current_group
+
 
 # Views for Students
 def exams_list(request):
-    exams = Exams.objects.all()
+
+    # check if we need to display exams only for 1 group that is selected
+    current_group = get_current_group(request)
+    if current_group:
+        exams = Exams.objects.filter(exam_group=current_group)
+    else:
+        exams = Exams.objects.all().order_by('date_time')
     # ordering students by last_name when 1st time on the page:
     if request.path == '/':
         exams = exams.order_by('exam_group')
