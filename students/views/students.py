@@ -50,7 +50,7 @@ class StudentsListView(TemplateView):
         context['groups'] = Group.objects.all().order_by('title')
 
         # paginate students
-        context = paginate(students, 5, self.request, context, var_name='students')
+        context = paginate(students, 10, self.request, context, var_name='students')
 
         return context
 

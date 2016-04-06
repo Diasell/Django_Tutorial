@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView
 
 from ..models.students import Student
 from ..models.monthjournal import MonthJournal
-from ..util import paginate
+from ..util import paginate, get_current_group
 
 
 
@@ -56,7 +56,12 @@ class JournalView(TemplateView):
         if kwargs.get('pk'):
             queryset = [Student.objects.get(pk=kwargs['pk'])]
         else:
-            queryset = Student.objects.order_by('last_name')
+            # check if we need to show only students from 1 group that is selected:
+            current_group = get_current_group(self.request)
+            if current_group:
+                queryset = Student.objects.filter(student_group=current_group)
+            else:
+                queryset = Student.objects.order_by('last_name')
 
         # url to update student presence for form post
         update_url = reverse('journal')
