@@ -47,7 +47,48 @@ function initGroupSelector() {
 	});
 }
 
+function initDateFields(){
+	$('input.dateinput').datetimepicker({
+		'format': 'YYYY-MM-DD'
+	}).on('dp.hide', function(event){
+			$(this).blur();
+		});
+}
+
+function initEditStudentPage() {
+	$('a.student-edit-form-link').click(function(event){
+		var link = $(this);
+		$.ajax({
+			'url': link.attr('href'),
+			'dataType': 'html',
+			'type': 'get',
+			'success': function(data,status,xhr){
+				//check if we got the successfull response from the server
+				if (status != 'success') {
+					alert('Помилка на сервері. Спробуйте пізніше будь ласка');
+					return false;
+				}
+
+				// update modal window with arrived content from the server
+				var modal = $('#myModal'), html = $(data), form = html.find('#content-column form');
+				modal.find('.modal-title').html(html.find('#content-column h2').text());
+				modal.find('.modal-body').html(form);
+
+				//setup and show modal window finally
+				modal.modal('show');
+			},
+			'error' : function() {
+				alert('Помилка на сервері. Спробуйте пізніше будь ласка');
+				return false;
+			}
+		});
+		return false;
+	});
+}
+
 $(document).ready(function(){
 	initJournal();
 	initGroupSelector();
+	initDateFields();
+	initEditStudentPage();
 });
