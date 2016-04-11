@@ -74,6 +74,10 @@ function initEditStudentPage() {
 				modal.find('.modal-title').html(html.find('#content-column h2').text());
 				modal.find('.modal-body').html(form);
 
+
+				// init out edit form
+				initEditStudentForm(form, modal);
+
 				//setup and show modal window finally
 				modal.modal('show');
 			},
@@ -83,6 +87,45 @@ function initEditStudentPage() {
 			}
 		});
 		return false;
+	});
+}
+
+function initEditStudentForm(form, modal) {
+	//attach datepicker(caolendar)
+	initDateFields();
+
+	//close modal window on Cancel button click
+	form.find('input[name="cancel_button"]').click(function(event){
+		modal.modal('hide');
+		return false;
+	});
+
+	// make form work in AJAX mode
+	form.ajaxForm({
+		'dataType':'html',
+		'error': function(){
+			alert('Помилка на сервері. Будь ласка спробуйте пізніше');
+			return false;
+		},
+		'success': function(data, status, xhr) {
+			var html = $(data), newform = html.find('#content-column form');
+
+			// copy alert to modal window
+			modal.find('.modal-body').html(html.find('.alert'));
+
+			// copy form to modal if we found it in server response
+			if (newform.lenght > 0) {
+				modal.find('.modal-body').append(newform);
+
+				//initialize form fields and buttons
+				initEditStudentForm(newform, modal);
+			} else {
+				// if no form, it means success and we need to reload page 
+				// to get updated students list;
+				// reload after 2 second so that user can read success msg
+				setTimeout(function(){location.reload(true);}, 1000);
+			}
+		}
 	});
 }
 

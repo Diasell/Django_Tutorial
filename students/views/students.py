@@ -239,7 +239,10 @@ class StudentUpdateView(UpdateView):
             messages.info(request, cancel_message)
             return HttpResponseRedirect(u'%s?status_message=Редагування студента відмінено!' % reverse('home'))
         else:
+            test_msg = u"Дані студента успішно змінені"
+            messages.success(request, test_msg)
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
+
 
 
 class StudentDeleteView(DeleteView):
