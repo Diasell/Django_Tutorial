@@ -52,7 +52,7 @@
                         <li role="presentation" {% if request.path == home %}class="active"{% endif %}{% if request.path == students_add %}class="active"{% endif %}><a href="{% url 'home' %}">Студенти</a></li>
 
                         {% url "journal" as journal %}
-                        <li role="presentation" {% ifequal request.path journal %}class="active"{% endifequal %}><a href="{% url 'journal' %}">Відвідування</a></li>
+                        <li role="presentation" {% ifequal request.path journal %}class="active"{% endifequal %}{%if journal in request.path %}class="active"{%endif%}><a href="{% url 'journal' %}">Відвідування</a></li>
 
                         {% url "groups" as group %}
                         <li role="presentation" {% ifequal request.path group %}class="active"{% endifequal %}><a href="{% url 'groups' %}">Групи</a></li>
