@@ -79,7 +79,11 @@ function initEditStudentPage() {
 				initEditStudentForm(form, modal);
 
 				//setup and show modal window finally
-				modal.modal('show');
+				modal.modal({
+					'keyboard':false,
+					'backdrop':false,
+					'show':true
+				});
 			},
 			'error' : function() {
 				alert('Помилка на сервері. Спробуйте пізніше будь ласка');
