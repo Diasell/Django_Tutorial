@@ -3,7 +3,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 
-from .models import Student, Professor
+from .models import Student, Professor, Group, Exams
 
 @receiver(post_save, sender=Student)
 def log_student_updated_added_event(sender, **kwargs):
@@ -60,3 +60,29 @@ def log_professor_deleted_event(sender, **kwargs):
     professor = kwargs['instance']
     logger.info("Professor deleted: %s %s (ID: %d)", professor.first_name, professor.last_name, professor.id)
 
+
+@receiver(post_save, sender=Exams)
+def log_exams_updated_added_event(sender, **kwargs):
+    """
+    Writes to log info about adding/updating professors
+    """
+    logger = logging.getLogger(__name__)
+
+    exam = kwargs['instance']
+    if kwargs['created']:
+        logger.info("Exam added: ID%d,  %s %s on %s ", exam.id, exam.exam_title, exam.exam_group, exam.date_time)
+    else:
+        logger.info("Exam updated: ID%d,  %s %s on %s ", exam.id, exam.exam_title, exam.exam_group, exam.date_time)
+
+
+
+@receiver(post_delete, sender=Exams)
+def log_professor_deleted_event(sender, **kwargs):
+    """
+    Writes to log about deleting professor events
+    """
+
+    logger = logging.getLogger(__name__)
+
+    exam = kwargs['instance']
+    logger.info("Exam deleted: ID%d,  %s %s on %s ", exam.id, exam.exam_title, exam.exam_group, exam.date_time)
