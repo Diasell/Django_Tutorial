@@ -64,7 +64,7 @@ def log_professor_deleted_event(sender, **kwargs):
 @receiver(post_save, sender=Exams)
 def log_exams_updated_added_event(sender, **kwargs):
     """
-    Writes to log info about adding/updating professors
+    Writes to log info about adding/updating exames
     """
     logger = logging.getLogger(__name__)
 
@@ -79,10 +79,37 @@ def log_exams_updated_added_event(sender, **kwargs):
 @receiver(post_delete, sender=Exams)
 def log_professor_deleted_event(sender, **kwargs):
     """
-    Writes to log about deleting professor events
+    Writes to log about deleting exams events
     """
 
     logger = logging.getLogger(__name__)
 
     exam = kwargs['instance']
     logger.info("Exam deleted: ID%d,  %s %s on %s ", exam.id, exam.exam_title, exam.exam_group, exam.date_time)
+
+
+@receiver(post_save, sender=Group)
+def log_exams_updated_added_event(sender, **kwargs):
+    """
+    Writes to log info about adding/updating groups
+    """
+    logger = logging.getLogger(__name__)
+
+    group = kwargs['instance']
+    if kwargs['created']:
+        logger.info("Group added: ID%d,  %s", group.id, group.title)
+    else:
+        logger.info("Group updated: ID%d,  %s", group.id, group.title)
+
+
+
+@receiver(post_delete, sender=Group)
+def log_professor_deleted_event(sender, **kwargs):
+    """
+    Writes to log about deleting group events
+    """
+
+    logger = logging.getLogger(__name__)
+
+    group = kwargs['instance']
+    logger.info("Group deleted: ID%d,  %s", group.id, group.title)
