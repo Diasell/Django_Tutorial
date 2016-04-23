@@ -88,7 +88,7 @@ class ExamsUpdateForm(ModelForm):
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link"))"""
         self.helper.layout = Layout(
             Fieldset(
-                'exams field list',
+                '',
                 'exam_title',
                 'exam_executor',
                 'exam_group',
