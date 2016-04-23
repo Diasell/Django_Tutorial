@@ -77,7 +77,55 @@ def groups_list(request):
 
 
 def groups_add(request):
-    return HttpResponse('<h1>Group Add Form</h1>')
+    # was form posted?
+    if request.method == "POST":
+
+        # was form add button clicked?
+        if request.POST.get("add_button") is not None:
+
+            # errors collection
+            errors = {}
+
+            # validated groups data will fo here
+            data = {'notes': request.POST.get('notes')}
+
+            # validate user input
+
+            title = request.POST.get('title', '').strip()
+            if not title:
+                errors['title'] = u"Назва групи є обов'язковою"
+            else:
+                data['title'] = title
+
+            leader = request.POST.get('leader', '').strip()
+            data['leader'] = leader
+
+            # save student
+            if not errors:
+                group = Group(**data)
+                group.save()
+                # redirect to groups list page
+                message_st_added = u'Група %s успішно додана!' % (group.title)
+                messages.success(request, message_st_added)
+                return HttpResponseRedirect(reverse('groups'))
+            else:
+                # render form with errors and previous user input
+                message_wrong_input = u'Будь-ласка, виправте наступні помилки'
+                messages.warning(request, message_wrong_input)
+                return render(request, 'students/groups_add.html', {'groups': Group.objects.all().order_by('title'),
+                                                                      'errors': errors})
+
+        elif request.POST.get('cancel_button') is not None:
+            # Redirect user to home page on cancel button
+            message_cancel_clicked = u'Додавання групи скасовано!'
+            messages.info(request, message_cancel_clicked)
+            return HttpResponseRedirect(reverse('groups'))
+
+    else:
+        # initial form render
+        return render(request, 'students/groups_add.html', {'groups': Group.objects.all().order_by('title')})
+
+    return render(request, 'students/groups_add.html', {'groups': Group.objects.all().order_by('title')})
 
 
 def groups_edit(request, gid):

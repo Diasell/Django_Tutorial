@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+import logging
+
 from django.shortcuts import render
 from django import forms
 from django.core.mail import send_mail
@@ -69,6 +72,8 @@ def contact_admin(request):
             except Exception:
                 message = u'Під час відправки листа виникла непередбачувана помилка.' \
                           u' Спробуйте скористатись даною формою пізніше.'
+                logger = logging.getLogger(__name__)
+                logger.exception(message)
                 messages.warning(request,message)
             else:
                 message = u'Повідомлення успішно надіслане!'
