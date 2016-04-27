@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'registration',
     'students',
 ]
 
@@ -78,7 +79,7 @@ WSGI_APPLICATION = 'studentsdb.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -94,7 +95,7 @@ DATABASES = {
         'PASSWORD': 'password1',
         'NAME': 'students_db',
     }
-}
+}"""
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -148,7 +149,7 @@ EMAIL_USE_SSL = False
 # contact forms crispy settings:
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-
+##################LOGS##################
 LOG_FILE = os.path.join(BASE_DIR, 'studentsdb.log')
 
 LOGGING = {
@@ -196,3 +197,6 @@ LOGGING = {
         },
     }
 }
+##################LOGS END##################
+
+REGISTRATION_OPEN = True

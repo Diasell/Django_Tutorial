@@ -15,14 +15,27 @@ Including another URLconf
 """
 from django.conf.urls import url, patterns, include
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
 from .settings import MEDIA_ROOT, DEBUG
 from students.views.students import StudentUpdateView, StudentDeleteView, StudentsListView
 from students.views.groups import DeleteGroupView, GroupUpdateView, GroupListView
 from students.views.exams import ExamsUpdateView
+from django.views.generic.base import RedirectView
 from students.views.journal import JournalView
 
 
+
+
 urlpatterns = [
+
+    # User Related urls
+    url(r'^users/logout/$', auth_views.logout, kwargs={'next_page':'home'}, name='auth_logout'),
+
+    url(r'^register/complete/$', RedirectView.as_view(pattern_name='home'), name='registration_complete'),
+
+    url(r'^users/', include('registration.backends.simple.urls', namespace='users')),
+
     # students url
     url(r'^$', StudentsListView.as_view(), name='home'),
 

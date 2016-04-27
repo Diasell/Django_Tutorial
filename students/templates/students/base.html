@@ -21,13 +21,14 @@
     <!-- Start Container -->
     <div class="container">
 
-        <!-- Start Header -->
+            <!-- Start Header -->
             <div class="row" id="header">
-            <!-- Logo -->
-                <div class="col-xs-8">
+                <!-- Logo -->
+                <div class="col-xs-6">
                     <h1>Сервіс Обліку Студентів</h1>
                 </div>
-            <!-- Groups Selector -->
+                <!-- Groups Selector -->
+                {% if user.is_authenticated %}
                 <div class="col-xs-4" id="group-selector">
                     <strong>Група:</strong>
                     <select>
@@ -39,6 +40,25 @@
                         {% endfor%}
                     </select>
                 </div>
+
+                <!-- User's toolbar for authenticated users -->
+                <div class="col-xs-2" id="user-toolbar">
+                    <span>{{ user.username}}</span> |
+                    <a href="{% url "users:auth_logout" %}">Logout</a>
+                </div>
+
+                {% else %}
+
+                <!-- User's toolbar for anonymus users -->
+                <div class="col-xs-6" id="user-toolbar">
+                    <a href="{% url "users:auth_login" %}">Login</a> |
+                    <a href="{% url "users:registration_register" %}">Register</a>
+                </div>
+
+                {% endif %}
+            
+
+
             </div>
         <!-- End Header -->
 
