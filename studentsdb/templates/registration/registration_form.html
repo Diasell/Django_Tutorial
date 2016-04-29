@@ -1,0 +1,61 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Registration Form{% endblock meta_title %}
+
+{% block title %}Registration Form{% endblock title %}
+
+{% block status_message %}
+	{% if form.errors %}
+		<div class="alert alert-warning" role="alert">
+			Please correct following errors: {{ form.non_field_errors }}			
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	
+	<form action="{% url "users:registration_register" %}" method="post">
+
+		{% csrf_token %}
+		<input type="hidden" name="text" value="{% url "home" %}" />
+
+		<div class="form-group">
+			<label for="login">Username: </label>
+			<input type="text" class="form-control" id="login" value="" name="username" />
+			<span class="help-block">{{form.errors.username.as_text }}</span>			
+		</div>
+
+		<div class="form-group">
+			<label for="email">Email: </label>
+			<input type="text" class="form-control" id="email" value="" name="email" />	
+			<span class="help-block">{{ form.errors.email.as_text }}</span>
+		</div>
+
+		<div class="form-group">
+			<label for="password">Password: </label>
+			<input type="password" class="form-control" id="password" value="" name="password1" />
+			<span class="help-block">{{form.errors.password1.as_text }}</span>
+		</div>
+
+		<div class="form-group">
+			<label for="password-confirm">Confirm password: </label>
+			<input type="password" class="form-control" id="password-confirm" value="" name="password2" />
+			<span class="help-block">{{form.errors.password2.as_text }}</span>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Register</button>
+
+	</form>
+	</br>
+
+{% endblock content %}
+
+{% block footer %}
+    <div class="row" id="footer">
+                <div class="col-xs-12">
+                    &copy; 2016 Сервіс Обліку Студентів
+                </div>
+    </div>
+{% endblock footer %}

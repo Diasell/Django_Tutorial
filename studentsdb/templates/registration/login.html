@@ -1,0 +1,40 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}Login Form{% endblock meta_title %}
+
+{% block title %}Login Form{% endblock title %}
+
+
+{% block content %}
+	
+	<form action="{%url "users:auth_login" %}" method="post">
+
+		{% csrf_token %}
+		<input type="hidden" name="next" value="{% url "home" %}" />
+
+		<div class="form-group">
+			<label for="login">Username: </label>
+			<input type="text" class="form-control" id="login" value="" name="username" />			
+		</div>
+
+		<div class="form-group">
+			<label for="password">Password: </label>
+			<input type="password" class="form-control" id="password" value="" name="password" />			
+		</div>
+
+		<button type="submit" class="btn btn-primary"> Login </button>
+		
+	</form>
+	</br>
+
+{% endblock content %}
+
+{% block footer %}
+    <div class="row" id="footer">
+                <div class="col-xs-12">
+                    &copy; 2016 Сервіс Обліку Студентів
+                </div>
+    </div>
+{% endblock footer %}
