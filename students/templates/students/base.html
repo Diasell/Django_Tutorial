@@ -71,18 +71,21 @@
                         {% url "students_add" as students_add %}
                         <li role="presentation" {% if request.path == home %}class="active"{% endif %}{% if request.path == students_add %}class="active"{% endif %}><a href="{% url 'home' %}">Студенти</a></li>
 
-                        {% url "journal" as journal %}
-                        <li role="presentation" {% ifequal request.path journal %}class="active"{% endifequal %}{%if journal in request.path %}class="active"{%endif%}><a href="{% url 'journal' %}">Відвідування</a></li>
+                        {% if user.is_authenticated %}
+                            {% url "journal" as journal %}
+                            <li role="presentation" {% ifequal request.path journal %}class="active"{% endifequal %}{%if journal in request.path %}class="active"{%endif%}><a href="{% url 'journal' %}">Відвідування</a></li>
 
-                        {% url "groups" as group %}
-                        <li role="presentation" {% ifequal request.path group %}class="active"{% endifequal %}><a href="{% url 'groups' %}">Групи</a></li>
+                            {% url "groups" as group %}
+                            <li role="presentation" {% ifequal request.path group %}class="active"{% endifequal %}><a href="{% url 'groups' %}">Групи</a></li>
 
-                         {% url "exams" as exam %}
-                        <li role="presentation" {% ifequal request.path exam %}class="active"{% endifequal %}><a href="{% url 'exams' %}">Іспити</a></li>
+                             {% url "exams" as exam %}
+                            <li role="presentation" {% ifequal request.path exam %}class="active"{% endifequal %}><a href="{% url 'exams' %}">Іспити</a></li>
+                        {% endif %}
 
-                         {% url "contact_admin" as contact_admin %}
-                        <li role="presentation" {% if request.path == contact_admin %}class="active"{% endif %}><a href="{% url 'contact_admin' %}">Контакт</a></li>
-
+                        {% if perms.auth.add_user %}
+                            {% url "contact_admin" as contact_admin %}
+                            <li role="presentation" {% if request.path == contact_admin %}class="active"{% endif %}><a href="{% url 'contact_admin' %}">Контакт</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
