@@ -11,10 +11,17 @@ from ..models.students import Student
 from ..models.monthjournal import MonthJournal
 from ..util import paginate, get_current_group
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 
 class JournalView(TemplateView):
     template_name = 'students/journal.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(JournalView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         # get context data from TemplateView class

@@ -19,6 +19,10 @@ from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
+
 class GroupListView(TemplateView):
     template_name = 'students/groups.html'
 
@@ -75,7 +79,7 @@ def groups_list(request):
 
     return render(request, 'students/groups.html', {'groups' : groups})"""
 
-
+@login_required
 def groups_add(request):
     # was form posted?
     if request.method == "POST":
@@ -140,6 +144,10 @@ class DeleteGroupView(DeleteView):
     model = Group
     template_name = 'students/delete_group_confirm.html'
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(GroupUpdateView, self).dispatch(*args, **kwargs)
+
     def get_success_url(self):
         return u'%s?Status_message=Група успішно видалена' % reverse('groups')
 
@@ -190,6 +198,10 @@ class GroupUpdateView(UpdateView):
     model = Group
     template_name = 'students/groups_edit.html'
     form_class = GroupUpdateForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(GroupUpdateView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
 

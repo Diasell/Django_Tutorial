@@ -137,7 +137,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 
-# Email Settings
+
+################## Email Settings#################
 ADMIN_EMAIL = 'gutsalyuk.taras@gmail.com'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = '587'
@@ -145,9 +146,13 @@ EMAIL_HOST_USER = 'gutsalyuk.taras@gmail.com'
 EMAIL_HOST_PASSWORD = '1qaz0okm_SendGrid1'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
+###################################################
 
-# contact forms crispy settings:
+
+############ontact forms crispy settings###########
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+###################################################
+
 
 ##################LOGS##################
 LOG_FILE = os.path.join(BASE_DIR, 'studentsdb.log')
@@ -200,3 +205,8 @@ LOGGING = {
 ##################LOGS END##################
 
 REGISTRATION_OPEN = True
+
+##################LOGIN URLS##################
+LOGIN_URL = 'users:auth_login'
+LOGOUT_URL = 'users:auth_logout'
+##################L###########################

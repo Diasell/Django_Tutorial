@@ -19,6 +19,9 @@ from django.views.generic import UpdateView
 
 from ..util import get_current_group
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 # Views for Students
 def exams_list(request):
@@ -107,6 +110,10 @@ class ExamsUpdateView(UpdateView):
     model = Exams
     template_name = 'students/exams_edit.html'
     form_class = ExamsUpdateForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ExamsUpdateView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         return reverse('exams')

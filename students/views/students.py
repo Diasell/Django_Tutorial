@@ -20,6 +20,10 @@ from crispy_forms.bootstrap import FormActions
 from ..util import paginate, get_current_group
 
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
+
 
 class StudentsListView(TemplateView):
     template_name = 'students/students_list.html'
@@ -77,7 +81,7 @@ def students_list(request):
 
     return render(request, 'students/students_list.html', context)"""
 
-
+@login_required
 def students_add(request):
     # was form posted?
     if request.method == "POST":
@@ -229,6 +233,10 @@ class StudentUpdateView(UpdateView):
     template_name = 'students/students_edit.html'
     form_class = StudentUpdateForm
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(StudentUpdateView, self).dispatch(*args, **kwargs)
+
     def get_success_url(self):
 
         return u'%s?status_message=студента успішно збережено!' % reverse('home')
@@ -248,6 +256,10 @@ class StudentUpdateView(UpdateView):
 class StudentDeleteView(DeleteView):
     model = Student
     template_name = 'students/student_confirm_delete.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(StudentDeleteView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         return u'%s?Status_message=Студента успішно видалено!' % reverse('home')
