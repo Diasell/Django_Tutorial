@@ -15,6 +15,8 @@ from crispy_forms.layout import Submit
 
 from studentsdb.settings import ADMIN_EMAIL
 
+from django.contrib.auth.decorators import permission_required
+
 
 class ContactForm(forms.Form):
     from_email = forms.EmailField(
@@ -53,6 +55,8 @@ class ContactForm(forms.Form):
         # form buttons
         self.helper.add_input(Submit('send_button', u'Надіслати'))
 
+
+@permission_required('auth.add_user')
 def contact_admin(request):
     # check if form was posted
     if request.method == 'POST':
