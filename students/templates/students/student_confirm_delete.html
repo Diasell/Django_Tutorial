@@ -1,18 +1,20 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
+
 {% load static from staticfiles %}
 
-{% block meta_title %}Видалити Студента{% endblock meta_title %}
+{% block meta_title %}{% trans "Delete Student"}{% endblock meta_title %}
 
-{% block title %}Видалити Студента{% endblock title %}
+{% block title %}{% trans "Delete Student"}{% endblock title %}
 
 {% block content %}
 
 <form action="{% url "students_delete" object.id %}" method="post">
 	{% csrf_token %}
-	<p>Ви дійсно хочете видалити студента "{{ object }}"?</p>
+	<p>{% trans "Are you sure that you want to delete a student" %} "{{ object }}"?</p>
 
-	<input type="submit" value="Так" name="delete_button" class="btn btn-danger" /><br /><br />
+	<input type="submit" value={%blocktrans%}"Yes"{% endblocktrans%} name="delete_button" class="btn btn-danger" /><br /><br />
 </form>
    
 

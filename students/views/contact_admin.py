@@ -17,19 +17,23 @@ from studentsdb.settings import ADMIN_EMAIL
 
 from django.contrib.auth.decorators import permission_required
 
+from django.utils.translation import ugettext_lazy as _
+
+from django.utils.translation import ugettext as __
+
 
 class ContactForm(forms.Form):
     from_email = forms.EmailField(
-        label=u'Ваш email'
+        label=_(u"Your Email")
     )
 
     subject = forms.CharField(
-        label=u'Заголовок листа',
+        label=_(u"Subject"),
         max_length=256
     )
 
     message = forms.CharField(
-        label=u'Текст повідомлення',
+        label=_(u"Email message"),
         max_length=2560,
         widget=forms.Textarea
     )
@@ -53,7 +57,7 @@ class ContactForm(forms.Form):
         self.helper.field_class = 'col-sm-10'
 
         # form buttons
-        self.helper.add_input(Submit('send_button', u'Надіслати'))
+        self.helper.add_input(Submit('send_button', __(u"Send")))
 
 
 @permission_required('auth.add_user')
@@ -74,13 +78,13 @@ def contact_admin(request):
             try:
                 send_mail(subject,message,from_email, [ADMIN_EMAIL])
             except Exception:
-                message = u'Під час відправки листа виникла непередбачувана помилка.' \
-                          u' Спробуйте скористатись даною формою пізніше.'
+                message = __(u"While sending this letter unexpected error occured." \
+                          u"Please try again later.")
                 logger = logging.getLogger(__name__)
                 logger.exception(message)
                 messages.warning(request,message)
             else:
-                message = u'Повідомлення успішно надіслане!'
+                message = __(u"Message has been sent successfully!")
                 messages.success(request,message)
 
             # redirect to same contact page with  message

@@ -1,9 +1,11 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
+
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
-{% block meta_title %}Зв'язок із Адміністратором{% endblock meta_title %}
+{% block meta_title %}{% trans "Contact Admin" %}{% endblock meta_title %}
 
 
 {% block statusmessage %}
@@ -15,7 +17,7 @@
 {% endblock statusmessage %}
 
 
-{% block title %}Зв'язок із Адміністратором{% endblock title %}
+{% block title %}{% trans "Contact Admin" %}{% endblock title %}
 
 
 {% block content %}
@@ -25,7 +27,7 @@
 {% block footer %}
     <div class="row" id="footer">
                 <div class="col-xs-12">
-                    &copy; 2016 Сервіс Обліку Студентів
+                    &copy; {% trans "2016 Students Open Database" %}
                 </div>
     </div>
 {% endblock footer %}

@@ -99,8 +99,8 @@ class ExamsUpdateForm(ModelForm):
                 'date_time'
             ),
             FormActions(
-                Submit('add_button', u'Зберегти', css_class="btn btn-primary"),
-                Submit('cancel_button', u'Скасувати', css_class="btn btn-link")
+                Submit('add_button', __(u"Save"), css_class="btn btn-primary"),
+                Submit('cancel_button', __(u"Cancel"), css_class="btn btn-link")
             )
         )
 
@@ -120,8 +120,8 @@ class ExamsUpdateView(UpdateView):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            cancel_message = u'Редагування іспиту відмінено!'
+            cancel_message = __(u"Changes to exam canceled")
             messages.info(request, cancel_message)
-            return HttpResponseRedirect(u'%s?status_message=Редагування студента відмінено!' % reverse('exams'))
+            return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('exams'),cancel_message))
         else:
             return super(ExamsUpdateView, self).post(request, *args, **kwargs)

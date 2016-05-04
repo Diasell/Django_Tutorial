@@ -1,43 +1,48 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
+
 {% load static from staticfiles %}
 
-{% block meta_title %}Облік Відвідування{% endblock meta_title %}
+{% block meta_title %}{% trans "Attendance Report" %}{% endblock meta_title %}
 
-{% block title %}Облік Відвідування{% endblock title %}
+{% block title %}{% trans "Attendance Report" %}{% endblock title %}
 
 {% block content %}
 
 {% if not students %}
 	<div class="alert alert-warning">
-		Поки немає жодного студента в базі. Будь-ласка,
-		<a href="{% url "students_add" %}">додайте</a> першого.
+		{% trans "There are no students in the database. Please, " %}Поки немає жодного студента в базі. Будь-ласка,
+		<a href="{% url "students_add" %}">{% trans "add" %}</a> {% trans "first one" %}.
 	</div>
 {% else %}
 	<div class="alert alert-info">
-		Зміни в журналі зберігаються автоматично при кожному кліку по чекбоксу
-		<span id="ajax-progress-indicator">Йде збереження...</span>
+		{% trans "Changes in the report saves automatically after you click on checkboxes" %}
+		<span id="ajax-progress-indicator">{% trans "Saving..." %}</span>
 	</div>
 	<p id="journal-nav" class="text-center">
-		<a href="?month={{ prev_month }}" title="Попередній Місяць">&larr;</a>
+		<a href="?month={{ prev_month }}" title={%blocktrans%}"Previous Month"{% endblocktrans %}>&larr;</a>
 
 		<!-- TODO: translate month name -->
 		<strong>{{ month_verbose }} {{ year }}</strong>
-		<a href="?month={{ next_month }}" title="Наступний Місяць">&rarr;</a>
+		<a href="?month={{ next_month }}" title={%blocktrans%}"Next Month"{% endblocktrans %}>&rarr;</a>
 	</p>
 
 	<table class="table table-hover table-striped table-bordered" id="students-journal">
 		<thead>
 			<tr class="header">
 				<th class="num">#</th>
-				<th class="name">Студент</th>
+				<th class="name">{% trans "Student" %}</th>
 
 				{% for day in month_header %}
 					<th class="day-header">
-						<!-- TODO: translate day name -->
-						{{ day.verbose }}
+						{% blocktrans with verbose=day.verbose %}
+						{{ verbose }}
+						{% endblocktrans %}
 						<br />
-						{{ day.day }}
+						{% blocktrans with day=day.day %} 
+						{{ day }}
+						{% endblocktrans %}
 					</th>
 				{% endfor %}
 			</tr>
@@ -56,7 +61,7 @@
 					</td>
 
 					<td>
-						<a title="Редагувати" target="_blank" href="{% url "students_edit" student.id %}">
+						<a title={% blocktrans %}"Edit"{% endblocktrans %} target="_blank" href="{% url "students_edit" student.id %}">
 							{{ student.fullname }}
 						</a>
 					</td>
@@ -85,7 +90,7 @@
 {% block footer %}
     <div class="row" id="footer">
                 <div class="col-xs-12">
-                    &copy; 2016 Сервіс Обліку Студентів
+                    &copy; {% trans "2016 Students Open Database" %}
                 </div>
     </div>
 {% endblock footer %}

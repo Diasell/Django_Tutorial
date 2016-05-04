@@ -1,15 +1,16 @@
 {% extends "students/base.html" %}
 
+{% load i18n %}
+
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 
-{% block meta_title %}Редагувати Студента{% endblock meta_title %}
+{% block meta_title %}{% trans "Edit Student" %}{% endblock meta_title %}
 
-{% block title %}Редагувати Студента{% endblock title %}
+{% block title %}{% trans "Edit Student" %}{% endblock title %}
 
 {% block status_message %}
     {% if messages %}
-        <!--<div class="alert alert-warning" role="alert">Будь ласка, виправте наступні помилки</div>-->
         <div class="alert alert-{{message.tags}}">{{message}}</div>
     {% endif %}
 {% endblock %}

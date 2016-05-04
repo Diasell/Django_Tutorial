@@ -25,9 +25,14 @@ from django.views.generic.base import RedirectView
 from students.views.journal import JournalView
 
 
-
+js_info_dict ={
+    'packages':('my.package',),
+}
 
 urlpatterns = [
+
+    #Default view that returns all lines translations
+    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
 
     # User Related urls
     url(r'^users/logout/$', auth_views.logout, kwargs={'next_page':'home'}, name='auth_logout'),

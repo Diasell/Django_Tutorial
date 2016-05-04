@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 from .models import Student, Group, Professor, LectorLevel, LectorPositions, MonthJournal, Exams
 
-
+from django.utils.translation import ugettext as _
 
 class StudentFormAdmin(ModelForm):
 
@@ -19,7 +19,7 @@ class StudentFormAdmin(ModelForm):
         groups = Group.objects.filter(leader = self.instance)
 
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-            raise ValidationError(u"Студент є старостою іншої групи.", code='invalid')
+            raise ValidationError(_(u"Student is a member of another group"), code='invalid')
         else:
             return self.cleaned_data['student_group']
 
@@ -35,7 +35,7 @@ class GroupFormAdmin(ModelForm):
         group_students = Student.objects.filter(student_group = self.instance)
 
         if len(group_students)>0 and self.cleaned_data['leader'] not in group_students:
-            raise ValidationError(u"Студент не належить до даної групи", code='invalid')
+            raise ValidationError(_(u"Student do not belong to the current group"), code='invalid')
         else:
             return self.cleaned_data['leader']
 
@@ -60,9 +60,9 @@ class StudentAdmin(admin.ModelAdmin):
 
         rows_updated = queryset.count()
         if rows_updated == 1:
-            user_message = "1 student was successfully dupicated"
+            user_message = _(u"1 student was successfully dupicated")
         else:
-            user_message = "%s students were successfully dupicated" % rows_updated
+            user_message = -_(u"%(rows_updated)s students were successfully dupicated") % {'rows_updated':rows_updated}
         self.message_user(request, user_message)
     duplicate_sel_student.short_description = "Duplicate"
 
