@@ -44,6 +44,8 @@ class GroupListView(TemplateView):
             if self.request.GET.get('reverse', '') == '1':
                 groups = groups.reverse()
 
+        for group in groups:
+            group.students_count = len(Student.objects.filter(student_group=group))
         context['groups'] = groups
 
         paginate(groups,3,self.request, context, var_name='groups')

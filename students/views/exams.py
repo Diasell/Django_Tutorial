@@ -22,6 +22,8 @@ from ..util import get_current_group
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
+from django.utils.translation import ugettext as _
+
 
 # Views for Students
 def exams_list(request):
@@ -99,8 +101,8 @@ class ExamsUpdateForm(ModelForm):
                 'date_time'
             ),
             FormActions(
-                Submit('add_button', __(u"Save"), css_class="btn btn-primary"),
-                Submit('cancel_button', __(u"Cancel"), css_class="btn btn-link")
+                Submit('add_button', _(u"Save"), css_class="btn btn-primary"),
+                Submit('cancel_button', _(u"Cancel"), css_class="btn btn-link")
             )
         )
 
@@ -120,7 +122,7 @@ class ExamsUpdateView(UpdateView):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('cancel_button'):
-            cancel_message = __(u"Changes to exam canceled")
+            cancel_message = _(u"Changes to exam canceled")
             messages.info(request, cancel_message)
             return HttpResponseRedirect(u'%s?status_message=%s' % (reverse('exams'),cancel_message))
         else:
