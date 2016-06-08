@@ -4,7 +4,7 @@ from django.db import models
 from django.forms import TextInput, Textarea, ModelForm, ValidationError
 from django.core.urlresolvers import reverse
 
-from .models import Student, Group, Professor, LectorLevel, LectorPositions, MonthJournal, Exams
+from .models import Student, Group, Professor, LectorLevel, LectorPositions, MonthJournal, Exams, Disciplines
 from .models.rooms import Rooms
 
 from django.utils.translation import ugettext as _
@@ -119,3 +119,4 @@ admin.site.register(LectorPositions)
 admin.site.register(Exams, ExamsAdmin)
 admin.site.register(MonthJournal)
 admin.site.register(Rooms)
+admin.site.register(Disciplines)

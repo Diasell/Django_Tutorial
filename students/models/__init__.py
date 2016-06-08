@@ -5,4 +5,4 @@ from .professor import Professor
 from .lectorlevel import LectorLevel
 from .lectorpositions import LectorPositions
 from .exams import Exams
-from .disciplines import
+from .disciplines import Disciplines
