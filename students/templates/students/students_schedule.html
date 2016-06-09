@@ -1,0 +1,37 @@
+{% extends "students/base.html" %}
+
+{% load i18n %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %}{% trans "Students List" %}{% endblock meta_title %}
+
+{% block title %}{% trans "Students List" %}{% endblock title %}
+
+
+{% block content %}
+    <!-- Start Students Listing -->
+    <table>
+        <thead>
+            <tr>
+                <th>{{weekday.dayoftheweek}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+    <!-- End Students Listing -->
+
+
+
+    <!-- End Main Page Content -->
+{% endblock content %}
+
+{% block footer %}
+    <div class="row" id="footer">
+                <div class="col-xs-12">
+                    &copy; {% trans "2016 Students Open Database" %}
+                </div>
+    </div>
+{% endblock footer %}
