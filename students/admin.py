@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 
 from .models import Student, Group, Professor, LectorLevel, LectorPositions, MonthJournal, Exams, Disciplines
 from .models.rooms import Rooms
+from .models.schedule import *
 
 from django.utils.translation import ugettext as _
 
@@ -110,6 +111,18 @@ class ProfessorAdmin(admin.ModelAdmin):
     def get_view_on_site(self, obj=None):
         return reverse('exams', kwargs={'pk':obj.id})
 
+
+
+class ParaAdmin(admin.ModelAdmin):
+
+    list_display = ['para_number', 'para_day', 'para_subject', 'para_group', 'para_room', 'para_professor']
+    list_display_links = ['para_subject', 'para_group']
+    list_filter = ['para_subject', 'para_group', 'para_room', 'para_professor', 'para_number', 'para_day']
+    list_per_page = 100
+    search_fields = ['para_subject', 'para_group', 'para_room', 'para_professor', 'para_number', 'para_day']
+
+
+
 # Register your models here.
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Group, GroupAdmin)
@@ -120,3 +133,8 @@ admin.site.register(Exams, ExamsAdmin)
 admin.site.register(MonthJournal)
 admin.site.register(Rooms)
 admin.site.register(Disciplines)
+admin.site.register(Para, ParaAdmin)
+admin.site.register(WorkingDay)
+admin.site.register(ParaTime)
+
+

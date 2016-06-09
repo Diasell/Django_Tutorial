@@ -23,6 +23,7 @@ from students.views.groups import DeleteGroupView, GroupUpdateView, GroupListVie
 from students.views.exams import ExamsUpdateView
 from django.views.generic.base import RedirectView
 from students.views.journal import JournalView
+from students.views.schedule import ScheduleView
 
 
 js_info_dict ={
@@ -68,6 +69,9 @@ urlpatterns = [
 
     # Journal urls:
     url(r'^journal/(?P<pk>\d+)?/?$', JournalView.as_view(),  name='journal'),
+
+    # Schedule urls:
+    url(r'^schedule/', ScheduleView.as_view(),  name='schedule'),
 
     # Contact-admin
     url(r'^contact-admin/$', 'students.views.contact_admin.contact_admin', name='contact_admin'),
