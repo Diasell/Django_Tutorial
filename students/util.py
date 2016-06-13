@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import timedelta
 
 def paginate(objects, size, request, context, var_name='object_list'):
     """
@@ -69,6 +70,23 @@ def get_current_group(request):
             return group
     else:
         return None
+
+
+def ifweekiseven(todaysdata, datastart):
+    """ helper function that tracks what week is now from the certain
+    day. For us it important when we calculate schedule as we  have to
+    know whether it is even week or odd
+    :param todaysdata,datastart: type datetime"""
+
+    weekday1e = datastart.weekday()
+    mondaydelta = timedelta(weekday1e)
+    monday = datastart - mondaydelta
+    delta = ((todaysdata - monday) / 7).days + 1
+
+    if delta % 2 == 0:
+        return True
+    else:
+        return False
 
 
 
