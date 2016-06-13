@@ -45,3 +45,24 @@ class Para(models.Model):
 
     def __unicode__(self):
         return u"%s %s" % (self.para_subject, self.para_room)
+
+
+
+class StartSemester(models.Model):
+
+    class Meta(object):
+        verbose_name = u"Початок семестру"
+        verbose_name_plural = u"Початок семестрів"
+
+    title = models.CharField(max_length=255,
+                             blank=False,
+                             null=True,
+                             default=u"1 семестр",
+                             verbose_name=u"Семестр")
+    semesterstart = models.DateField(verbose_name=u"Дата початку навчання")
+    semesterend = models.DateField(verbose_name=u"Дата закінчення навчання")
+
+    def __unicode__(self):
+        return u"%s" % self.title
+
+

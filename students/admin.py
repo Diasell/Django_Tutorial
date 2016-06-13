@@ -136,5 +136,6 @@ admin.site.register(Disciplines)
 admin.site.register(Para, ParaAdmin)
 admin.site.register(WorkingDay)
 admin.site.register(ParaTime)
+admin.site.register(StartSemester)
 
 
