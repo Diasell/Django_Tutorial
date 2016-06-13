@@ -6,19 +6,32 @@
 
 {% block meta_title %}{% trans "Students List" %}{% endblock meta_title %}
 
-{% block title %}{% trans "Students List" %}{% endblock title %}
+{% block title %}{% trans "Students schedule" %}{% endblock title %}
 
 
 {% block content %}
     <!-- Start Students Listing -->
-    <table>
+    <table class="table table-hover table-striped">
         <thead>
             <tr>
-                <th>{{weekday.dayoftheweek}}</th>
+                {% for day in weekday%}
+                <th>{{day.dayoftheweek}}</th>
+                {%endfor%}
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>Discipline</th>
+                <th>Room</th>
             </tr>
         </thead>
         <tbody>
-            
+            {% for p in sched_today %}
+                <tr>
+                    <td>{{p.para_number}}</td>
+                    <td>{{p.para_subject}}</td>
+                    <td>{{p.para_room}}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
     <!-- End Students Listing -->
