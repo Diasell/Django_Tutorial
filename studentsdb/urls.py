@@ -25,6 +25,10 @@ from django.views.generic.base import RedirectView
 from students.views.journal import JournalView
 from students.views.schedule import ScheduleView
 
+#REST API
+from students.api import ParaResource
+para_resource = ParaResource()
+
 
 js_info_dict ={
     'packages':('my.package',),
@@ -78,6 +82,9 @@ urlpatterns = [
 
     # admin part
     url(r'^admin/', include(admin.site.urls)),
+
+    # API part
+    url(r'^api/', include(para_resource.urls)),
 ]
 
 if DEBUG:
