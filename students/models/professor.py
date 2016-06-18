@@ -8,7 +8,7 @@ from django.db import models
 
 class Professor(models.Model):
     """
-    Students model
+    Professor model
     """
 
     class Meta(object):
