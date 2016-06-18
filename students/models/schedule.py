@@ -22,7 +22,7 @@ class ParaTime(models.Model):
         verbose_name_plural = u"Час проведення пар"
 
     para_starttime = models.TimeField(blank=True, null=True, verbose_name=u"Початок пари")
-    para_endtime = models.TimeField(blank=True, null=True, verbose_name=u"Початок пари")
+    para_endtime = models.TimeField(blank=True, null=True, verbose_name=u"Кінець пари")
     para_position = models.IntegerField(blank=True, null=True, default=0, verbose_name=u"Номер пари")
 
     def __unicode__(self):

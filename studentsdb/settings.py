@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
+    'rest_framework',
     'crispy_forms',
     'registration',
     'students',
@@ -219,3 +221,15 @@ REGISTRATION_OPEN = True
 LOGIN_URL = 'users:auth_login'
 LOGOUT_URL = 'users:auth_logout'
 ##################L###########################
+
+
+################ REST FRAMEWORK ##############
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
+}

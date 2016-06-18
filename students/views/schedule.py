@@ -62,11 +62,11 @@ class ScheduleView(TemplateView):
 
         context['weekday'] = current_day
         context['sched_today'] = sched_today
-        context['sched_monday'] = sched_monday
-        context['sched_tuesday'] = sched_tuesday
-        context['sched_wednesday'] = sched_wednesday
-        context['sched_thursday'] = sched_thursday
-        context['sched_friday'] = sched_friday
-        context['sched_saturday'] = sched_saturday
+        # context['sched_monday'] = sched_monday
+        # context['sched_tuesday'] = sched_tuesday
+        #context['sched_wednesday'] = sched_wednesday
+        #context['sched_thursday'] = sched_thursday
+        #context['sched_friday'] = sched_friday
+        #context['sched_saturday'] = sched_saturday
         context['groups'] = Group.objects.all().order_by('title')
         return context
