@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
+
 from django.db import models
 from django.forms import TextInput, Textarea, ModelForm, ValidationError
 from django.core.urlresolvers import reverse
@@ -41,32 +44,32 @@ class GroupFormAdmin(ModelForm):
         else:
             return self.cleaned_data['leader']
 
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ['last_name', 'first_name', 'ticket', 'student_group']
-    list_display_links = ['last_name', 'first_name']
-    list_filter = ['student_group']
-    list_per_page = 10
-    search_fields = ['last_name', 'first_name', 'middle_name', 'ticket', 'notes']
-
-    form = StudentFormAdmin
-
-    actions = ['duplicate_sel_student']
-
-    def get_view_on_site(self, obj):
-        return reverse('students_edit', kwargs={'pk':obj.id})
-
-    def duplicate_sel_student(self, request, queryset):
-        for object in queryset:
-            object.id = None
-            object.save()
-
-        rows_updated = queryset.count()
-        if rows_updated == 1:
-            user_message = _(u"1 student was successfully dupicated")
-        else:
-            user_message = -_(u"%(rows_updated)s students were successfully dupicated") % {'rows_updated':rows_updated}
-        self.message_user(request, user_message)
-    duplicate_sel_student.short_description = "Duplicate"
+# class StudentAdmin(admin.ModelAdmin):
+#     list_display = ['last_name', 'first_name', 'ticket', 'student_group']
+#     list_display_links = ['last_name', 'first_name']
+#     list_filter = ['student_group']
+#     list_per_page = 10
+#     search_fields = ['last_name', 'first_name', 'middle_name', 'ticket', 'notes']
+#
+#     form = StudentFormAdmin
+#
+#     actions = ['duplicate_sel_student']
+#
+#     def get_view_on_site(self, obj):
+#         return reverse('students_edit', kwargs={'pk':obj.id})
+#
+#     def duplicate_sel_student(self, request, queryset):
+#         for object in queryset:
+#             object.id = None
+#             object.save()
+#
+#         rows_updated = queryset.count()
+#         if rows_updated == 1:
+#             user_message = _(u"1 student was successfully dupicated")
+#         else:
+#             user_message = -_(u"%(rows_updated)s students were successfully dupicated") % {'rows_updated':rows_updated}
+#         self.message_user(request, user_message)
+#     duplicate_sel_student.short_description = "Duplicate"
 
 
 class GroupAdmin(admin.ModelAdmin):
@@ -123,8 +126,22 @@ class ParaAdmin(admin.ModelAdmin):
 
 
 
+class StudentInline(admin.StackedInline):
+    model = Student
+    can_delete = False
+    verbose_name_plural = 'Student'
+
+# Define a new User admin
+class UserAdmin(BaseUserAdmin):
+    inlines = (StudentInline, )
+
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+
+
 # Register your models here.
-admin.site.register(Student, StudentAdmin)
+#admin.site.register(Student, StudentAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Professor, ProfessorAdmin)
 admin.site.register(LectorLevel)

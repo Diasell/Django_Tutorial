@@ -48,19 +48,18 @@
         </thead>
         {% endwith %}
         <tbody>
-            {% for student in students %}
+            {% for st in students %}
                 <tr>
                     <td>{{ students.start_index|add:forloop.counter0 }}</td>
                     <td>
-                        {% if student.photo %}
+                        {% if st.photo %}
                             <img height="30" width="30" class="img-circle" src="{{student.photo.url}}">
                         {% else %}
                             <img class="img-circle" src="{% static 'img/df.jpg' %}"height="30" width="30" />
                         {% endif %}
                     </td>
-                    <td><a title={%blocktrans%}"Edit"{%endblocktrans%} href="{% url 'students_edit' student.id %}" class="student-edit-form-link">{{student.last_name}}</a></td>
-                    <td><a title={%blocktrans%}"Edit"{%endblocktrans%} href="{% url 'students_edit' 1 %}" class="student-edit-form-link">{{student.first_name}}</a></td>
-                    <td>{{student.ticket}}</td>
+                    <td><a title={%blocktrans%}"Edit"{%endblocktrans%} href="{% url 'students_edit' student.id %}" class="student-edit-form-link">{{ request.user.last_name}}</a></td>
+                    <td><a title={%blocktrans%}"Edit"{%endblocktrans%} href="{% url 'students_edit' 1 %}" class="student-edit-form-link">{{request.user.first_name}}</a></td>
                     {% if user.is_authenticated %}
                     <td>
                         <div class="dropdown">
@@ -69,7 +68,7 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url "journal" student.id %}">{% trans "Attendance Report" %}</a>
+                                    <a role="menuitem" tabindex="-1" href="{% url "journal" st.id %}">{% trans "Attendance Report" %}</a>
                                 </li>
                                 <li role="presentation">
                                     <a role="menuitem" tabindex="-1" href="{% url 'students_edit' student.id %}" class="student-edit-form-link">{% trans "Edit" %}</a>

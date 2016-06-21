@@ -15,6 +15,9 @@ class ScheduleView(TemplateView):
 
         context = super(ScheduleView, self).get_context_data(**kwargs)
 
+        user = self.request.user
+
+
         # check if we need to show only 1 group of students:
         current_group = get_current_group(self.request)
         current_weekday = datetime.date.today().weekday()  # integer 0-monday .. 6-Sunday

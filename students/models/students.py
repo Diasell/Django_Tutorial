@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+from django.contrib.auth.models import User
+
 
 from django.db import models
 
@@ -16,16 +18,7 @@ class Student(models.Model):
         verbose_name = u"Студент"
         verbose_name_plural = u"Студенти"
 
-
-    first_name = models.CharField(
-        max_length=256,
-        blank=False,
-        verbose_name = u"Ім'я")
-
-    last_name = models.CharField(
-        max_length=256,
-        blank=False,
-        verbose_name=u"Прізвище")
+    user = models.OneToOneField(User, primary_key=True)
 
     middle_name = models.CharField(
         max_length=256,
@@ -49,14 +42,5 @@ class Student(models.Model):
         verbose_name=u"Фото",
         null=True)
 
-    ticket = models.CharField(
-        blank=False,
-        max_length=256,
-        verbose_name=u"№ Білета‚")
-
-    notes = models.TextField(
-        blank=True,
-        verbose_name=u"Додаткові нотатки")
-
     def __unicode__(self):
-        return u"%s %s" % (self.first_name, self.last_name)
+        return u"user:%s, %s %s" % (self.user, self.user.first_name, self.user.last_name)

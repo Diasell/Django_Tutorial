@@ -35,6 +35,11 @@ class StudentsListView(TemplateView):
 
         context = super(StudentsListView, self).get_context_data(**kwargs)
 
+        user = self.request.user
+
+        print user.first_name
+        print user.last_name
+
         # check if we need to show only 1 group of students:
         current_group = get_current_group(self.request)
         if current_group:
