@@ -23,12 +23,6 @@ class Group(models.Model):
         null=True,
         on_delete=models.SET_NULL)
 
-    students_count = models.IntegerField(
-        verbose_name=u"Number of Students",
-        default= 0,
-        blank=False,
-    )
-
     notes = models.TextField(
         blank=True,
         verbose_name=u"Додаткові нотатки")

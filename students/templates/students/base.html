@@ -83,9 +83,6 @@
                             {% url "exams" as exam %}
                             <li role="presentation" {% ifequal request.path exam %}class="active"{% endifequal %}><a href="{% url 'exams' %}">{% trans "Exams" %}</a></li>
 
-                            {% url "schedule" as sched %}
-                            <li role="presentation" {% ifequal request.path sched %}class="active"{% endifequal %}><a href="{% url 'schedule' %}">Schedule</a></li>
-
                         {% endif %}
 
                         {% if perms.auth.add_user %}
